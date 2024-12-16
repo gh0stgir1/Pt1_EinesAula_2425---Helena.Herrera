@@ -1,0 +1,30 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eines per l'Aula</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Eines per l'Aula</h1>
+        <button id="toggle-mode">Canvia a Mode Fosca</button>
+    </header>
+    <main>
+        <section id="ruleta-noms">
+            <h2>Ruleta de Noms</h2>
+            <button id="load-names">Carrega Noms</button>
+            <div id="ruleta-container">
+                <canvas id="ruleta" width="500" height="500"></canvas>
+            </div>
+            <button id="spin">Gira la Ruleta</button>
+            <p id="selected-name">Nom seleccionat: <span></span></p>
+        </section>
+    </main>
+    <script src="mode.js"></script>
+    <script src="loadNames.js"></script>
+    <script src="spinWheel.js"></script>
+</body>
+</html>
