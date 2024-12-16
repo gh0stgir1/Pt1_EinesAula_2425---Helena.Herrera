@@ -3,7 +3,7 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4;
+    background-color: #a865bc3b;
 }
 
 /* Línea lateral morada clara */
@@ -11,20 +11,20 @@ body {
     max-width: 1200px; /* Limita el ancho del contenedor para centrado */
     margin: 0 auto; /* Centra el contenedor en la pantalla */
     padding: 0 20px; /* Añade espacio interno para evitar tocar los bordes del contenedor */
-    border-left: 5px solid #d0a3ff; /* Línea izquierda más ancha */
-    border-right: 5px solid #d0a3ff; /* Línea derecha más ancha */
+    border-left: 5px solid #2d025b; /* Línea izquierda más ancha */
+    border-right: 5px solid #2b0158; /* Línea derecha más ancha */
 }
 #title {
     text-align: center;  
     margin-top: 20px;
     font-size: 32px;
     font-weight: bold;
-    color: #800080; 
+    color: #660080; 
     margin-bottom: 20px;
 }
 
 canvas {
-    border: 1px solid #ddd; /* Borde gris claro */
+    border: 1px solid #43076e; /* Borde gris claro */
     display: block;
     margin: 20px auto;
     border-radius: 8px; /* Bordes redondeados ligeros */
@@ -65,7 +65,7 @@ button {
     height: 0;
     border-top: 15px solid transparent;
     border-bottom: 15px solid transparent;
-    border-left: 40px solid black; /* Triángulo negro */
+    border-left: 40px solid rgb(69, 14, 135); /* Triángulo negro */
 }
 
 /* Agrega estilos para el contenedor general */
@@ -95,11 +95,10 @@ button.dark {
 }
 
 .side-indicator {
-    border-left: 40px solid #fff; /* Triángulo blanco en modo oscuro */
+    border-left: 40px solid #6617aa; /* Triángulo blanco en modo oscuro */
 }
 
 #toggle-mode {
     background-color: #555; /* Botón con fondo oscuro */
     color: #fff; /* Texto blanco en botón */
 }
-
