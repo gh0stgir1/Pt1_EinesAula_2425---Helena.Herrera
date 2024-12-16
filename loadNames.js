@@ -1,18 +1,11 @@
-let noms = [];
+let names = [];
 
-document.getElementById("load-names").addEventListener("click", async () => {
-    try {
-        const response = await fetch("noms.txt");
-        const text = await response.text();
-        noms = text.split("\n").map(nom => nom.trim()).filter(nom => nom);
-
-        if (noms.length) {
-            alert("Noms carregats correctament!");
-        } else {
-            alert("El fitxer està buit o no és accessible.");
-        }
-    } catch (error) {
-        console.error("Error en carregar noms:", error);
-        alert("No s'ha pogut carregar el fitxer de noms.");
-    }
+document.getElementById("loadNames").addEventListener("click", () => {
+  fetch("noms.txt")
+    .then((response) => response.text())
+    .then((data) => {
+      names = data.split("\n").filter((name) => name.trim() !== "");
+      alert("Noms carregats correctament!");
+    })
+    .catch((error) => console.error("Error carregant els noms:", error));
 });
