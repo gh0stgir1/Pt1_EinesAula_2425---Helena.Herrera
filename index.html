@@ -1,29 +1,23 @@
 <!DOCTYPE html>
 <html lang="ca">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Eines per l'Aula</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <title>Ruleta de Noms</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
-<body>
-    <header>
-        <h1>Eines per l'Aula</h1>
-        <button id="toggle-mode">Canvia a Mode Fosca</button>
-    </header>
-    <main>
-        <section id="ruleta-noms">
-            <h2>Ruleta de Noms</h2>
-            <button id="load-names">Carrega Noms</button>
-            <div id="ruleta-container">
-                <canvas id="ruleta" width="500" height="500"></canvas>
-            </div>
-            <button id="spin">Gira la Ruleta</button>
-            <p id="selected-name">Nom seleccionat: <span></span></p>
-        </section>
-    </main>
-    <script src="mode.js"></script>
-    <script src="loadNames.js"></script>
-    <script src="spinWheel.js"></script>
+<body class="container">
+  <div id="title">Ruleta de noms</div>
+  <button id="toggle-mode">Modo Oscuro</button> 
+  <div class="wheel-container">
+    <canvas id="wheelCanvas" width="500" height="500"></canvas>
+    <div class="side-indicator"></div>
+  </div>
+  <button id="spinButton">Gira la Ruleta</button>
+  <button id="loadNamesButton">Carrega Noms</button>
+  <p id="selectedName">Nom seleccionat: </p>
+
+  <script src="spinWheel.js"></script>
+  <script src="mode.js"></script> <!-- Script para el cambio de tema -->
 </body>
 </html>
+
