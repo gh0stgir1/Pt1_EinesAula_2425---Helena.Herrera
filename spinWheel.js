@@ -1,73 +1,96 @@
-let angleActual = 0;
+const canvas = document.getElementById("wheelCanvas");
+const ctx = canvas.getContext("2d");
+let angle = 0;
+let spinning = false;
+let names = []; // Lista de nombres
 
-document.getElementById("spin").addEventListener("click", () => {
-    if (noms.length === 0) {
-        alert("Carrega els noms abans de girar la ruleta.");
-        return;
+// Función para dibujar la ruleta
+function drawWheel() {
+  const numSegments = names.length > 0 ? names.length : 1; // Asegura que al menos un segmento esté presente
+  const segmentAngle = (2 * Math.PI) / numSegments;
+
+  ctx.clearRect(0, 0, canvas.width, canvas.height); // Limpia el canvas
+
+  // Dibuja cada segmento
+  for (let i = 0; i < numSegments; i++) {
+    const startAngle = i * segmentAngle;
+    const endAngle = startAngle + segmentAngle;
+
+    ctx.beginPath();
+    ctx.moveTo(250, 250);
+    ctx.arc(250, 250, 250, startAngle, endAngle);
+    ctx.fillStyle = i % 2 === 0 ? "#ffcc00" : "#ff6600"; // Colores alternados
+    ctx.fill();
+    ctx.stroke();
+
+    ctx.save();
+    ctx.translate(250, 250);
+    ctx.rotate(startAngle + segmentAngle / 2);
+    ctx.textAlign = "center";
+    ctx.fillStyle = "#000";
+    ctx.font = "16px Arial";
+    ctx.fillText(names.length > 0 ? names[i] : "Espai buit", 150, 10); // Mostrar "Espai buit" si no hay nombres
+    ctx.restore();
+  }
+}
+
+function spinWheel() {
+  if (spinning || names.length === 0) return; // No girar si ya está girando o no hay nombres
+
+  spinning = true;
+  const spinTime = Math.random() * 3000 + 2000; // Entre 2 i 5 segons
+  const spinSpeed = Math.random() * 10 + 5; // Velocitat inicial
+
+  let currentSpeed = spinSpeed;
+
+  const spinInterval = setInterval(() => {
+    angle += currentSpeed;
+    currentSpeed *= 0.98; // Redueix la velocitat gradualment
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height); // Limpia el canvas
+    ctx.save();
+    ctx.translate(250, 250);
+    ctx.rotate((angle * Math.PI) / 180);
+    ctx.translate(-250, -250);
+    drawWheel(); // Dibuja la ruleta girada
+    ctx.restore();
+
+    if (currentSpeed < 0.1) {
+      clearInterval(spinInterval);
+      spinning = false;
+
+      const selectedSegment = Math.floor(
+        ((360 - (angle % 360)) / 360) * names.length
+      );
+      document.getElementById("selectedName").textContent =
+        "Nom seleccionat: " + names[selectedSegment];
     }
+  }, 30);
+}
 
-    const canvas = document.getElementById("ruleta");
-    const ctx = canvas.getContext("2d");
-    const radius = canvas.width / 2;
+// Función para cargar nombres desde noms.txt
+function loadNamesFromFile() {
+  fetch('noms.txt')
+    .then(response => response.text())
+    .then(data => {
+      names = data.split('\n').filter(name => name.trim() !== ''); // Filtra nombres no vacíos
+      drawWheel(); // Dibuja la ruleta con los nombres cargados
+    })
+    .catch(error => console.error('Error al cargar noms:', error));
+}
 
-    // Divideix la ruleta segons el nombre de noms
-    const sliceAngle = (2 * Math.PI) / noms.length;
-
-    // Dibuixa la ruleta
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    noms.forEach((nom, i) => {
-        ctx.beginPath();
-        ctx.moveTo(radius, radius);
-        ctx.arc(
-            radius,
-            radius,
-            radius,
-            i * sliceAngle,
-            (i + 1) * sliceAngle
-        );
-        ctx.fillStyle = i % 2 === 0 ? "#ffcc00" : "#ff9900";
-        ctx.fill();
-        ctx.stroke();
-
-        // Text al segment
-        ctx.save();
-        ctx.translate(radius, radius);
-        ctx.rotate(i * sliceAngle + sliceAngle / 2);
-        ctx.textAlign = "center";
-        ctx.fillStyle = "#000000";
-        ctx.font = "16px Arial";
-        ctx.fillText(nom, radius / 2, 5);
-        ctx.restore();
-    });
-
-    // Gira la ruleta
-    const spins = Math.floor(Math.random() * 10) + 3;
-    const targetAngle = Math.random() * 2 * Math.PI;
-    const totalAngle = 2 * Math.PI * spins + targetAngle;
-
-    let start = null;
-    function animate(timestamp) {
-        if (!start) start = timestamp;
-        const elapsed = timestamp - start;
-
-        const easeOut = (t) => 1 - Math.pow(1 - t, 3);
-        const progress = Math.min(elapsed / 3000, 1);
-        const currentAngle = angleActual + easeOut(progress) * totalAngle;
-
-        ctx.save();
-        ctx.translate(radius, radius);
-        ctx.rotate(currentAngle);
-        ctx.drawImage(canvas, -radius, -radius);
-        ctx.restore();
-
-        if (progress < 1) {
-            requestAnimationFrame(animate);
-        } else {
-            angleActual = currentAngle % (2 * Math.PI);
-            const selectedIndex = Math.floor(noms.length - (angleActual / sliceAngle)) % noms.length;
-            document.querySelector("#selected-name span").textContent = noms[selectedIndex];
-        }
-    }
-
-    requestAnimationFrame(animate);
+// Inicialización
+document.addEventListener("DOMContentLoaded", () => {
+  // Inicializar la ruleta con nombres aleatorios si está vacío
+  if (names.length === 0) {
+    names = Array.from({ length: 10 }, (_, i) => `Nom ${i + 1}`); // Nombres predeterminados
+    drawWheel(); // Dibujar con nombres predeterminados
+  } else {
+    drawWheel(); // Dibujar siempre si hay nombres cargados
+  }
 });
+
+
+// Event listeners
+document.getElementById("spinButton").addEventListener("click", spinWheel);
+document.getElementById("loadNamesButton").addEventListener("click", loadNamesFromFile); // Botón para cargar nombres
