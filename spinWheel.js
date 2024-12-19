@@ -88,6 +88,68 @@ document.addEventListener("DOMContentLoaded", () => {
   } else {
     drawWheel(); // Dibujar siempre si hay nombres cargados
   }
+
+  document.getElementById("startTimer").addEventListener("click", function() {
+    const endTimeInput = document.getElementById("endTime").value;
+    const countdownInput = document.getElementById("countdown").value;
+    let timer;
+
+    if (endTimeInput) {
+        // Format: HH:MM AM/PM
+        const [time, period] = endTimeInput.split(" ");
+        const [hours, minutes] = time.split(":");
+        const targetTime = new Date();
+        targetTime.setHours(parseInt(hours) % 12 + (period === "PM" ? 12 : 0));
+        targetTime.setMinutes(parseInt(minutes));
+        targetTime.setSeconds(0);
+
+        startTimer(targetTime);
+    } else if (countdownInput) {
+        // Format: HH:MM:SS
+        const [hours, minutes, seconds] = countdownInput.split(":").map(Number);
+        const targetTime = new Date();
+        targetTime.setHours(targetTime.getHours() + hours, targetTime.getMinutes() + minutes, targetTime.getSeconds() + seconds);
+
+        startTimer(targetTime);
+    }
+});
+
+function startTimer(targetTime) {
+    clearInterval(timer);
+    updateTimer();
+
+    timer = setInterval(() => {
+        const currentTime = new Date();
+        const remainingTime = targetTime - currentTime;
+
+        if (remainingTime <= 0) {
+            clearInterval(timer);
+            document.getElementById("timerDisplay").textContent = "00:00:00";
+            playAudio();
+        } else {
+            updateTimerDisplay(remainingTime);
+        }
+    }, 1000);
+}
+
+function updateTimerDisplay(remainingTime) {
+    const hours = Math.floor(remainingTime / 3600000);
+    const minutes = Math.floor((remainingTime % 3600000) / 60000);
+    const seconds = Math.floor((remainingTime % 60000) / 1000);
+
+    document.getElementById("timerDisplay").textContent = `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
+}
+
+function pad(number) {
+    return number.toString().padStart(2, "0");
+}
+
+function playAudio() {
+    const audio = document.getElementById("audioPlayer");
+    audio.src = document.getElementById("audioSelect").value;
+    audio.play();
+}
+
 });
 
 
