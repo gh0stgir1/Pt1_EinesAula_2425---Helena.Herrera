@@ -4,6 +4,7 @@ body {
     margin: 0;
     padding: 0;
     background-color: #a865bc3b;
+    color: #000;
 }
 
 /* Línea lateral morada clara */
@@ -81,7 +82,7 @@ button {
 
 
 body.dark {
-    background-color: #121212; /* Fondo oscuro */
+    background-color: #19053e; /* Fondo oscuro */
     color: #ffffff; /* Texto claro */
 }
 
@@ -89,9 +90,9 @@ body.dark .wheel-container {
     background-color: #1e1e1e; /* Fondo oscuro del contenedor de la rueda */
 }
 
-button.dark {
-    background-color: #333; /* Fondo oscuro para botones */
-    color: #fff; /* Texto claro en botones */
+body.dark button{
+    background-color: #030303; /* Fondo oscuro para botones */
+    color: #fefefe; /* Texto claro en botones */
 }
 
 .side-indicator {
@@ -99,6 +100,65 @@ button.dark {
 }
 
 #toggle-mode {
-    background-color: #555; /* Botón con fondo oscuro */
+    background-color: #2f063b; /* Botón con fondo oscuro */
     color: #fff; /* Texto blanco en botón */
+}
+
+/*--------------------------------------------------/
+/*--------------------------------------------------/
+/*--------------------------------------------------/
+/*Rellotge:*/
+.timer-container {
+    text-align: center; /* Centra el temporitzador */
+    padding: 20px;
+    background-color: #fff;
+    border-top: 1px solid #ddd;
+}
+
+.timer-display {
+    font-size: 48px;
+    margin-bottom: 20px;
+}
+
+.time-input {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.time-input input {
+    width: 45%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #6617aa;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+}
+
+button:hover {
+    background-color: #6617aa;
+}
+
+.audio-select {
+    margin-bottom: 20px;
+}
+
+.audio-select select {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.audio-preview {
+    display: none;
 }
