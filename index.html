@@ -18,6 +18,29 @@
 
   <script src="spinWheel.js"></script>
   <script src="mode.js"></script> <!-- Script para el cambio de tema -->
+
+  <!-- Temporitzador -->
+  <div id="title">Rellotge temporitzador</div>
+  <div class="timer-container">
+    <div class="clock-display" id="currentClock">00:00:00</div> <!-- Hora actual -->
+    <div class="timer-display" id="timerDisplay">00:00:00</div> <!-- Temporitzador -->
+    <div class="time-input">
+        <input type="text" id="endTime" placeholder="Hora exacta (HH:MM)" />
+        <input type="text" id="countdown" placeholder="Temps restant (HH:MM:SS)" />
+    </div>
+    <button id="startTimer">Començar Temporitzador</button>
+    <div class="audio-select">
+        <label for="audioSelect">Selecciona un so per a l'alarma:</label>
+        <select id="audioSelect">
+            <option value="sound1.mp3">So 1</option>
+            <option value="sound2.mp3">So 2</option>
+            <option value="sound3.mp3">So 3</option>
+        </select>
+    </div>
+    <audio id="audioPlayer"></audio>
+  </div>
+
+  <script src="spinWheel.js"></script>
+  <script src="timer.js"></script>
 </body>
 </html>
-
